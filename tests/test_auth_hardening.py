@@ -2,9 +2,9 @@
 
 import pytest
 
-import smart_llm.token_revocation as tr
-from smart_llm.api.middleware import require_api_key
-from smart_llm.token_revocation import is_revoked, token_is_revoked
+import centeba_smart_llm.token_revocation as tr
+from centeba_smart_llm.api.middleware import require_api_key
+from centeba_smart_llm.token_revocation import is_revoked, token_is_revoked
 
 
 class _BoomRedis:

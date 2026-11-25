@@ -2,10 +2,10 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from smart_llm.agent import Agent
-from smart_llm.agent_manager import AgentManager
-from smart_llm.base import LLMResponse
-from smart_llm.key_manager import KeyManager
+from centeba_smart_llm.agent import Agent
+from centeba_smart_llm.agent_manager import AgentManager
+from centeba_smart_llm.base import LLMResponse
+from centeba_smart_llm.key_manager import KeyManager
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ async def test_agent_analyze_success(mock_provider_response):
     """Test Agent.analyze when provider succeeds."""
     # We patch the specific provider used in the agent.
     # Since Agent.__init__ calls _init_provider, we patch the provider classes.
-    with patch("smart_llm.agent.GeminiProvider") as MockGemini:
+    with patch("centeba_smart_llm.agent.GeminiProvider") as MockGemini:
         mock_instance = MockGemini.return_value
         mock_instance.complete = AsyncMock(return_value=mock_provider_response)
 
@@ -43,8 +43,8 @@ async def test_agent_manager_failover(mock_provider_response):
     """Test AgentManager failover when the first agent fails."""
     # Patch GeminiProvider and OpenAIProvider
     with (
-        patch("smart_llm.agent.GeminiProvider") as MockGemini,
-        patch("smart_llm.agent.OpenAIProvider") as MockOpenAI,
+        patch("centeba_smart_llm.agent.GeminiProvider") as MockGemini,
+        patch("centeba_smart_llm.agent.OpenAIProvider") as MockOpenAI,
     ):
         # Agent 1 (Gemini) - will fail
         gemini_mock = MockGemini.return_value
@@ -80,7 +80,7 @@ async def test_agent_manager_failover(mock_provider_response):
 @pytest.mark.asyncio
 async def test_agent_manager_all_fail():
     """Test AgentManager when all agents fail."""
-    with patch("smart_llm.agent.GeminiProvider") as MockGemini:
+    with patch("centeba_smart_llm.agent.GeminiProvider") as MockGemini:
         gemini_mock = MockGemini.return_value
         gemini_mock.complete = AsyncMock(side_effect=Exception("Final Failure"))
 

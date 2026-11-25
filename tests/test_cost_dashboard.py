@@ -9,8 +9,8 @@ from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from smart_llm.api.routers.usage import create_usage_router
-from smart_llm.usage import UsageContext, make_usage_model, record_usage
+from centeba_smart_llm.api.routers.usage import create_usage_router
+from centeba_smart_llm.usage import UsageContext, make_usage_model, record_usage
 
 
 class _Base(DeclarativeBase):

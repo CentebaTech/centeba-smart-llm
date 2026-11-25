@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from jwt.algorithms import RSAAlgorithm
 
-import smart_llm.platform_auth as pa
+import centeba_smart_llm.platform_auth as pa
 
 
 def _keypair() -> tuple[str, str]:

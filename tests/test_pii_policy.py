@@ -2,7 +2,7 @@
 
 import pytest
 
-from smart_llm.pii import policy
+from centeba_smart_llm.pii import policy
 
 
 @pytest.fixture(autouse=True)

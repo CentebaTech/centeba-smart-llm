@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Setup script for 'smart-llm' library.
+    Setup script for 'centeba-smart-llm' library.
 .DESCRIPTION
     Creates a virtual environment and installs the package in editable mode.
 #>
 
 Write-Host "===========================" -ForegroundColor Cyan
-Write-Host "smart-llm Library Setup" -ForegroundColor Cyan
+Write-Host "centeba-smart-llm Library Setup" -ForegroundColor Cyan
 Write-Host "===========================" -ForegroundColor Cyan
 
 # 1. Check Python

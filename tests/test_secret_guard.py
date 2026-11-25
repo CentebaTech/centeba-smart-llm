@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from smart_llm.secret_guard import enforce_no_placeholder_secrets, is_placeholder_secret
+from centeba_smart_llm.secret_guard import (
+    enforce_no_placeholder_secrets,
+    is_placeholder_secret,
+)
 
 
 @pytest.mark.parametrize(

@@ -1,16 +1,16 @@
-# smart-llm — User Guide
+# centeba-smart-llm — User Guide
 
-A practical guide to installing and using `smart-llm`. See
+A practical guide to installing and using `centeba-smart-llm`. See
 [`REQUIREMENTS.md`](REQUIREMENTS.md) for scope, [`DESIGN.md`](DESIGN.md) for
 architecture, and [`agent-loop.md`](agent-loop.md) for the loop internals.
 
 ## Install
 
 ```bash
-pip install smart-llm                    # core (provider SDKs + agent loop)
-pip install "smart-llm[db]"              # DB-backed key store / usage (SQLAlchemy)
-pip install "smart-llm[observability]"   # Prometheus / OTEL / Sentry
-pip install "smart-llm[mcp]"             # MCP client
+pip install centeba-smart-llm                    # core (provider SDKs + agent loop)
+pip install "centeba-smart-llm[db]"              # DB-backed key store / usage (SQLAlchemy)
+pip install "centeba-smart-llm[observability]"   # Prometheus / OTEL / Sentry
+pip install "centeba-smart-llm[mcp]"             # MCP client
 ```
 
 Local development:
@@ -34,7 +34,7 @@ export OPENROUTER_API_KEY=...
 
 ```python
 import asyncio
-from smart_llm import Agent, AgentManager, ContextPruningTool
+from centeba_smart_llm import Agent, AgentManager, ContextPruningTool
 
 
 async def main():
@@ -68,7 +68,7 @@ policy (deny-by-default — see "Safety"). Subclass `ActionTool`, set its
 A complete, runnable external-API tool is in
 [`../examples/custom_tool.py`](../examples/custom_tool.py).
 
-> **Vendor integrations are intentionally not shipped.** smart-llm keeps the core
+> **Vendor integrations are intentionally not shipped.** centeba-smart-llm keeps the core
 > vendor-neutral — adapters for specific services (Stripe, Gmail, Drive, …) belong
 > in *your* codebase, added via the `ActionTool` pattern above or the MCP client
 > (below). That keeps the package free of any single backend's credentials and
@@ -89,8 +89,8 @@ A complete, runnable external-API tool is in
 
 ```python
 from fastapi import FastAPI
-from smart_llm.logging_config import configure_logging
-from smart_llm.observability import install_observability
+from centeba_smart_llm.logging_config import configure_logging
+from centeba_smart_llm.observability import install_observability
 
 configure_logging(service_name="my-service")  # JSON logs + OTLP export + trace ids
 app = FastAPI()
@@ -135,11 +135,11 @@ scrape_configs:
 With the `[mcp]` extra, connect an external Model Context Protocol tool server;
 its tools are adapted into native `ActionTool`s, their descriptions sanitized, and
 their definitions fingerprint-pinned (a server that swaps tools after approval is
-flagged). See `smart_llm.mcp.client`.
+flagged). See `centeba_smart_llm.mcp.client`.
 
 ## Keys & rotation
 
-`smart_llm.key_manager` / `key_store` manage multiple keys per provider with
+`centeba_smart_llm.key_manager` / `key_store` manage multiple keys per provider with
 rotation and failover. The default store is in-memory; the `[db]` extra provides a
 SQLAlchemy-backed store for persistence and per-key usage accounting.
 
@@ -157,7 +157,7 @@ until one succeeds — so to fail from Anthropic over to OpenRouter, register an
 Anthropic agent first and an OpenRouter agent second:
 
 ```python
-from smart_llm import Agent, AgentManager
+from centeba_smart_llm import Agent, AgentManager
 
 primary = Agent(
     name="primary",
@@ -196,28 +196,28 @@ Because breakers are **per-provider and shared**, registering several agents on
 the *same* provider only adds key/config variety — it does not add vendor
 redundancy. For true redundancy, give each fallback a **different**
 `provider_type`. (Same-provider agents are still useful for A/B configs or
-distinct system prompts — see `smart_llm/api/main.py` for a paired example.)
+distinct system prompts — see `centeba_smart_llm/api/main.py` for a paired example.)
 
 ## Persistence & schema (agents, skills, keys, usage/budgets)
 
-smart-llm defines its tables as **ORM models bound to a host-provided declarative
+centeba-smart-llm defines its tables as **ORM models bound to a host-provided declarative
 `Base`**, not as migrations — the package is a library, so the host app owns
 schema creation. The models:
 
-- `smart_llm.db.models` — `ai_skills`, `ai_agent_configs`, `ai_agent_skill_links`,
+- `centeba_smart_llm.db.models` — `ai_skills`, `ai_agent_configs`, `ai_agent_skill_links`,
   `ai_agent_grants`, `ai_skill_grants`, `agent_runs`, `agent_action_audit`.
-- `smart_llm.models` — `llm_api_keys`.
-- `smart_llm.usage.make_usage_model(Base)` — the **`ai_usage_events`** ledger that
+- `centeba_smart_llm.models` — `llm_api_keys`.
+- `centeba_smart_llm.usage.make_usage_model(Base)` — the **`ai_usage_events`** ledger that
   powers usage & budgets (usd_cost, tokens, company_id, created_at); budget
-  enforcement lives in `smart_llm.usage` (`UsageContext`, `BudgetExceededError`).
+  enforcement lives in `centeba_smart_llm.usage` (`UsageContext`, `BudgetExceededError`).
 
 ### Batteries-included (standalone)
 
-`smart_llm.db.schema` bundles every table onto one `Base` (needs the `[db]` extra):
+`centeba_smart_llm.db.schema` bundles every table onto one `Base` (needs the `[db]` extra):
 
 ```python
 from sqlalchemy import create_engine
-from smart_llm.db.schema import create_all
+from centeba_smart_llm.db.schema import create_all
 
 create_all(create_engine("postgresql+psycopg://user:pw@host/db"))
 ```
@@ -240,8 +240,8 @@ If your app already owns a `Base` + migrations, **don't import `schema`** — bi
 the factories to your Base and manage them with your own migrations instead:
 
 ```python
-from smart_llm.db.models import make_ai_models
-from smart_llm.usage import make_usage_model
+from centeba_smart_llm.db.models import make_ai_models
+from centeba_smart_llm.usage import make_usage_model
 
 ai_models = make_ai_models(host_base)  # agent/skill/grant/run/audit models
 AIUsageEvent = make_usage_model(host_base)  # ai_usage_events ledger

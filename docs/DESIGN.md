@@ -1,4 +1,4 @@
-# smart-llm — Technical Design
+# centeba-smart-llm — Technical Design
 
 Status: draft · Companion to [`REQUIREMENTS.md`](REQUIREMENTS.md) and
 [`agent-loop.md`](agent-loop.md).
@@ -23,7 +23,7 @@ Status: draft · Companion to [`REQUIREMENTS.md`](REQUIREMENTS.md) and
                                ▼  observability: logs (JSON+OTLP), metrics, traces
 ```
 
-## 2. Core components (`src/smart_llm/`)
+## 2. Core components (`src/centeba_smart_llm/`)
 
 - **`agent.py` / `agent_loop.py`** — the agent and its tool-calling loop; applies
   loop/cost guards, runs the safety pipeline on I/O, and dispatches tools through

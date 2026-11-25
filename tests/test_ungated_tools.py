@@ -5,8 +5,8 @@ import json
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.agent_loop import AgentTurn, ToolCall, run_agent_loop
-from smart_llm.base import ActionTool
+from centeba_smart_llm.agent_loop import AgentTurn, ToolCall, run_agent_loop
+from centeba_smart_llm.base import ActionTool
 
 
 class _Args(BaseModel):

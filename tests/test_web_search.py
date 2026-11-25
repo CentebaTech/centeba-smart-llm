@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from smart_llm.builtins import web_search
-from smart_llm.builtins.web_search import WebSearchArgs, WebSearchTool
+from centeba_smart_llm.builtins import web_search
+from centeba_smart_llm.builtins.web_search import WebSearchArgs, WebSearchTool
 
 
 @pytest.fixture(autouse=True)

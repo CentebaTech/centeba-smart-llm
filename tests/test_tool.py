@@ -1,4 +1,4 @@
-from smart_llm.tool import ContextPruningTool, PIIFilterTool
+from centeba_smart_llm.tool import ContextPruningTool, PIIFilterTool
 
 
 def test_context_pruning_tool():

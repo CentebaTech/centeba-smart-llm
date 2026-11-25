@@ -1,5 +1,5 @@
 name: smart_llm_ui
-description: Flutter UI for smart-llm — agent config, skills, and LLM-key management screens.
+description: Flutter UI for centeba-smart-llm — agent config, skills, and LLM-key management screens.
 publish_to: "none"
 version: 0.1.0
 

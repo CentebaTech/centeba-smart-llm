@@ -2,7 +2,7 @@
 
 import asyncio
 
-from smart_llm.security.scope import ScopeGuard
+from centeba_smart_llm.security.scope import ScopeGuard
 
 
 class _FakeProvider:

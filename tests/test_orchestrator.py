@@ -18,7 +18,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from smart_llm.orchestrator import (
+from centeba_smart_llm.orchestrator import (
     MAX_DEPTH,
     AgentGraphSpec,
     OrchestratorSkill,
@@ -259,8 +259,8 @@ def test_orchestrator_skill_is_pass_through():
 
 def test_orchestrator_skill_registered_in_registry():
     """The skill auto-registers on import as ``orchestrate_agents``.
-    Confirms ``smart_llm.registry`` sees it."""
-    from smart_llm.registry import get_tool_meta
+    Confirms ``centeba_smart_llm.registry`` sees it."""
+    from centeba_smart_llm.registry import get_tool_meta
 
     meta = get_tool_meta("orchestrate_agents")
     assert meta is not None

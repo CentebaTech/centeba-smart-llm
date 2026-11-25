@@ -1,7 +1,7 @@
 """Per-provider ``stream_with_tools`` event-emission tests.
 
 Mocks each SDK's chunk shape and asserts the provider yields the
-discriminated-union events documented in :mod:`smart_llm.agent_loop`.
+discriminated-union events documented in :mod:`centeba_smart_llm.agent_loop`.
 Driver-side semantics are covered separately in
 ``test_streaming_tools.py``.
 """
@@ -16,7 +16,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.base import ActionTool
+from centeba_smart_llm.base import ActionTool
 
 # ── Shared ActionTool fixture ───────────────────────────────────────────────
 
@@ -67,11 +67,11 @@ async def test_openai_stream_with_tools_text_only():
         _ns(choices=[], usage=_ns(prompt_tokens=10, completion_tokens=5)),
     ]
 
-    with patch("smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
+    with patch("centeba_smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
         client = MockSDK.return_value
         client.chat.completions.create = AsyncMock(return_value=_async_iter(chunks))
 
-        from smart_llm.providers.openai import OpenAIProvider
+        from centeba_smart_llm.providers.openai import OpenAIProvider
 
         provider = OpenAIProvider(api_key="k", model_name="gpt-4o")
         events = []
@@ -163,11 +163,11 @@ async def test_openai_stream_with_tools_tool_call_chunks():
         _ns(choices=[], usage=_ns(prompt_tokens=12, completion_tokens=8)),
     ]
 
-    with patch("smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
+    with patch("centeba_smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
         client = MockSDK.return_value
         client.chat.completions.create = AsyncMock(return_value=_async_iter(chunks))
 
-        from smart_llm.providers.openai import OpenAIProvider
+        from centeba_smart_llm.providers.openai import OpenAIProvider
 
         provider = OpenAIProvider(api_key="k", model_name="gpt-4o")
         events = []
@@ -226,11 +226,11 @@ async def test_openai_stream_with_tools_synthesises_id_when_missing():
             usage=None,
         ),
     ]
-    with patch("smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
+    with patch("centeba_smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
         client = MockSDK.return_value
         client.chat.completions.create = AsyncMock(return_value=_async_iter(chunks))
 
-        from smart_llm.providers.openai import OpenAIProvider
+        from centeba_smart_llm.providers.openai import OpenAIProvider
 
         provider = OpenAIProvider(api_key="k", model_name="gpt-4o")
         events = [
@@ -248,11 +248,11 @@ async def test_openai_stream_with_tools_error_event_on_exception():
     """Provider raising during streaming surfaces as an ``error``
     event rather than propagating — keeps the agent-loop driver's
     consumer in control of recovery."""
-    with patch("smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
+    with patch("centeba_smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
         client = MockSDK.return_value
         client.chat.completions.create = AsyncMock(side_effect=RuntimeError("boom"))
 
-        from smart_llm.providers.openai import OpenAIProvider
+        from centeba_smart_llm.providers.openai import OpenAIProvider
 
         provider = OpenAIProvider(api_key="k", model_name="gpt-4o")
         events = [
@@ -283,11 +283,11 @@ async def test_gemini_stream_with_tools_text_only(monkeypatch):
             usage_metadata=_ns(prompt_token_count=5, candidates_token_count=2),
         ),
     ]
-    with patch("smart_llm.providers.gemini.genai") as MockGenai:
+    with patch("centeba_smart_llm.providers.gemini.genai") as MockGenai:
         client = MockGenai.Client.return_value
         client.models.generate_content_stream = MagicMock(return_value=iter(chunks))
 
-        from smart_llm.providers.gemini import GeminiProvider
+        from centeba_smart_llm.providers.gemini import GeminiProvider
 
         provider = GeminiProvider(api_key="k", model_name="gemini-2.5-flash")
         events = [
@@ -316,11 +316,11 @@ async def test_gemini_stream_with_tools_function_call_emits_full_sequence():
             usage_metadata=_ns(prompt_token_count=8, candidates_token_count=4),
         ),
     ]
-    with patch("smart_llm.providers.gemini.genai") as MockGenai:
+    with patch("centeba_smart_llm.providers.gemini.genai") as MockGenai:
         client = MockGenai.Client.return_value
         client.models.generate_content_stream = MagicMock(return_value=iter(chunks))
 
-        from smart_llm.providers.gemini import GeminiProvider
+        from centeba_smart_llm.providers.gemini import GeminiProvider
 
         provider = GeminiProvider(api_key="k", model_name="gemini-2.5-flash")
         events = [
@@ -345,13 +345,13 @@ async def test_gemini_stream_with_tools_function_call_emits_full_sequence():
 @pytest.mark.asyncio
 async def test_gemini_stream_with_tools_error_event_on_exception():
     """SDK raising during stream start surfaces as ``error``."""
-    with patch("smart_llm.providers.gemini.genai") as MockGenai:
+    with patch("centeba_smart_llm.providers.gemini.genai") as MockGenai:
         client = MockGenai.Client.return_value
         client.models.generate_content_stream = MagicMock(
             side_effect=RuntimeError("kaboom")
         )
 
-        from smart_llm.providers.gemini import GeminiProvider
+        from centeba_smart_llm.providers.gemini import GeminiProvider
 
         provider = GeminiProvider(api_key="k", model_name="gemini-2.5-flash")
         events = [

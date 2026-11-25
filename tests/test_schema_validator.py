@@ -1,8 +1,8 @@
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.base import LLMResponse
-from smart_llm.security.schema_validator import (
+from centeba_smart_llm.base import LLMResponse
+from centeba_smart_llm.security.schema_validator import (
     OutputSchemaValidator,
     SchemaValidationError,
 )

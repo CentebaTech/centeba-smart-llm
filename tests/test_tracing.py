@@ -14,7 +14,7 @@ from opentelemetry.sdk.trace.export.in_memory_span_exporter import (  # noqa: E4
     InMemorySpanExporter,
 )
 
-from smart_llm.agent import Agent  # noqa: E402
+from centeba_smart_llm.agent import Agent  # noqa: E402
 
 _exporter = InMemorySpanExporter()
 
@@ -43,7 +43,7 @@ def _patch_provider(token_counts=(0, 0), data=None):
         "input_tokens": token_counts[0],
         "output_tokens": token_counts[1],
     }
-    return patch("smart_llm.agent.AnthropicProvider", mock_cls), instance
+    return patch("centeba_smart_llm.agent.AnthropicProvider", mock_cls), instance
 
 
 @pytest.mark.asyncio
@@ -91,8 +91,8 @@ async def test_analyze_emits_agent_and_model_spans():
 async def test_agent_loop_emits_model_and_tool_spans():
     from pydantic import BaseModel
 
-    from smart_llm.agent_loop import AgentTurn, ToolCall, run_agent_loop
-    from smart_llm.base import ActionTool
+    from centeba_smart_llm.agent_loop import AgentTurn, ToolCall, run_agent_loop
+    from centeba_smart_llm.base import ActionTool
 
     class _Args(BaseModel):
         x: int = 0
@@ -146,7 +146,7 @@ async def test_agent_loop_emits_model_and_tool_spans():
 @pytest.mark.asyncio
 async def test_no_spans_when_otel_disabled(monkeypatch):
     # Force the no-op path (simulates opentelemetry not installed).
-    monkeypatch.setattr("smart_llm.tracing._OTEL", False)
+    monkeypatch.setattr("centeba_smart_llm.tracing._OTEL", False)
     prov_patch, _ = _patch_provider((1, 1), {"content": "ok"})
     with prov_patch:
         agent = Agent(

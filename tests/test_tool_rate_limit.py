@@ -3,12 +3,12 @@
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.security.rate_limit import (
+from centeba_smart_llm.security.rate_limit import (
     RateLimit,
     TokenBucketRateLimiter,
     make_tool_rate_limiter,
 )
-from smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
+from centeba_smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
 
 
 class _Args(BaseModel):
@@ -36,7 +36,7 @@ def test_token_bucket_keys_are_independent():
 
 
 def test_token_bucket_refills(monkeypatch):
-    import smart_llm.security.rate_limit as mod
+    import centeba_smart_llm.security.rate_limit as mod
 
     t = {"now": 100.0}
     monkeypatch.setattr(mod.time, "monotonic", lambda: t["now"])

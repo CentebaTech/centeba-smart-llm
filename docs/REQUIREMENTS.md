@@ -1,6 +1,6 @@
-# smart-llm — Requirements
+# centeba-smart-llm — Requirements
 
-Status: draft · Scope: the standalone `smart-llm` package.
+Status: draft · Scope: the standalone `centeba-smart-llm` package.
 
 ## 1. Purpose
 
@@ -74,7 +74,7 @@ platform.
 
 ## 5. Acceptance criteria
 
-- `pip install smart-llm` imports and runs an agent against a configured provider
+- `pip install centeba-smart-llm` imports and runs an agent against a configured provider
   with no optional extras present.
 - A write/external tool is denied when no policy gate is configured; allowed only
   under an explicit policy.

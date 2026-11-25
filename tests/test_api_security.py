@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
-from smart_llm.base import LLMResponse
+from centeba_smart_llm.base import LLMResponse
 
 
 @pytest.fixture
@@ -15,7 +15,7 @@ def client():
         # Re-import to get fresh app state
         import importlib
 
-        import smart_llm.api.main as main_module
+        import centeba_smart_llm.api.main as main_module
 
         importlib.reload(main_module)
 
@@ -62,7 +62,7 @@ class TestInputSizeLimits:
         with patch.dict(os.environ, {"SMART_LLM_MAX_INPUT_LENGTH": "100"}):
             import importlib
 
-            import smart_llm.api.main as main_module
+            import centeba_smart_llm.api.main as main_module
 
             importlib.reload(main_module)
             main_module._has_agent = True
@@ -84,7 +84,7 @@ class TestSafeErrorHandling:
     def test_no_agents_returns_503(self):
         import importlib
 
-        import smart_llm.api.main as main_module
+        import centeba_smart_llm.api.main as main_module
 
         importlib.reload(main_module)
         main_module._has_agent = False
@@ -101,7 +101,7 @@ class TestSafeErrorHandling:
         )
 
     def test_internal_error_does_not_leak_details(self, client):
-        import smart_llm.api.main as main_module
+        import centeba_smart_llm.api.main as main_module
 
         main_module.manager.analyze = AsyncMock(
             side_effect=RuntimeError("secret internal API key: sk-12345")
@@ -117,8 +117,8 @@ class TestSafeErrorHandling:
         assert body["detail"] == "Internal server error"
 
     def test_prompt_injection_returns_400(self, client):
-        import smart_llm.api.main as main_module
-        from smart_llm.security import PromptInjectionError
+        import centeba_smart_llm.api.main as main_module
+        from centeba_smart_llm.security import PromptInjectionError
 
         main_module.manager.analyze = AsyncMock(
             side_effect=PromptInjectionError("injection detected")
@@ -132,8 +132,8 @@ class TestSafeErrorHandling:
         assert "harmful" in response.json()["detail"].lower()
 
     def test_schema_validation_returns_502(self, client):
-        import smart_llm.api.main as main_module
-        from smart_llm.security import SchemaValidationError
+        import centeba_smart_llm.api.main as main_module
+        from centeba_smart_llm.security import SchemaValidationError
 
         main_module.manager.analyze = AsyncMock(
             side_effect=SchemaValidationError("bad schema", validation_errors=[])
@@ -159,7 +159,7 @@ class TestAPIKeyAuth:
         with patch.dict(os.environ, {"SMART_LLM_API_KEYS": "key1,key2"}):
             import importlib
 
-            import smart_llm.api.main as main_module
+            import centeba_smart_llm.api.main as main_module
 
             importlib.reload(main_module)
             main_module._has_agent = True
@@ -180,7 +180,7 @@ class TestAPIKeyAuth:
         with patch.dict(os.environ, {"SMART_LLM_API_KEYS": "key1,key2"}):
             import importlib
 
-            import smart_llm.api.main as main_module
+            import centeba_smart_llm.api.main as main_module
 
             importlib.reload(main_module)
             main_module._has_agent = True
@@ -197,7 +197,7 @@ class TestAPIKeyAuth:
         with patch.dict(os.environ, {"SMART_LLM_API_KEYS": "key1"}):
             import importlib
 
-            import smart_llm.api.main as main_module
+            import centeba_smart_llm.api.main as main_module
 
             importlib.reload(main_module)
             main_module._has_agent = True
@@ -213,7 +213,7 @@ class TestAPIKeyAuth:
         with patch.dict(os.environ, {"SMART_LLM_API_KEYS": "key1"}):
             import importlib
 
-            import smart_llm.api.main as main_module
+            import centeba_smart_llm.api.main as main_module
 
             importlib.reload(main_module)
             client = TestClient(main_module.app)
@@ -226,7 +226,7 @@ class TestRateLimiting:
     def test_allows_requests_under_limit(self):
         import importlib
 
-        import smart_llm.api.main as main_module
+        import centeba_smart_llm.api.main as main_module
 
         importlib.reload(main_module)
         main_module._has_agent = True
@@ -236,7 +236,7 @@ class TestRateLimiting:
         main_module.manager.analyze = AsyncMock(return_value=mock_response)
 
         # Re-add middleware with low limit for testing
-        from smart_llm.api.middleware import RateLimitMiddleware
+        from centeba_smart_llm.api.middleware import RateLimitMiddleware
 
         # Clear existing middleware and add with low limit
         main_module.app = main_module.FastAPI(

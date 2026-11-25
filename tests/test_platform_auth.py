@@ -1,4 +1,4 @@
-"""RS256 verification for smart_llm.platform_auth.
+"""RS256 verification for centeba_smart_llm.platform_auth.
 
 The shared verifier every service uses. user-master is the only signer (roadmap
 2.3): tokens verify with JWT_PUBLIC_KEY (or JWT_JWKS_URL, see
@@ -18,7 +18,10 @@ import pytest
 from cryptography.hazmat.primitives import serialization as ser
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from smart_llm.platform_auth import decode_platform_token, platform_auth_configured
+from centeba_smart_llm.platform_auth import (
+    decode_platform_token,
+    platform_auth_configured,
+)
 
 AUD, ISS = "sentinelbuild", "user-master"
 

@@ -2,7 +2,7 @@
 
 import pytest
 
-from smart_llm.orchestrator import AgentGraphSpec, HopContext, run_agent_graph
+from centeba_smart_llm.orchestrator import AgentGraphSpec, HopContext, run_agent_graph
 
 
 def _spec():

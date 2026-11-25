@@ -1,7 +1,7 @@
 """Phase E4 — end-to-end usage recording + budget enforcement.
 
-Covers the integration between :class:`smart_llm.agent.Agent` and the
-recorder/guard helpers in :mod:`smart_llm.usage`. The Agent layer is
+Covers the integration between :class:`centeba_smart_llm.agent.Agent` and the
+recorder/guard helpers in :mod:`centeba_smart_llm.usage`. The Agent layer is
 the integration boundary that hosts (integration-hub's AIService,
 mit-stack's agent_node activity) plug into, so these tests pin the
 contract there:
@@ -30,8 +30,8 @@ import pytest_asyncio
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from smart_llm.agent import Agent
-from smart_llm.usage import (
+from centeba_smart_llm.agent import Agent
+from centeba_smart_llm.usage import (
     PRICING,
     BudgetExceededError,
     UsageContext,
@@ -187,7 +187,7 @@ def _patch_provider(token_counts=(0, 0), data=None):
         "input_tokens": token_counts[0],
         "output_tokens": token_counts[1],
     }
-    return patch("smart_llm.agent.AnthropicProvider", mock_cls), instance
+    return patch("centeba_smart_llm.agent.AnthropicProvider", mock_cls), instance
 
 
 @pytest.mark.asyncio
@@ -531,7 +531,7 @@ async def test_record_usage_without_key_still_inserts_each_time(db_session):
 async def test_budget_compare_is_exact_decimal(db_session):
     """The cap check compares Decimal spend to a (float) budget without drift or
     TypeError, and raises exactly at the cap."""
-    from smart_llm.usage import assert_within_budget
+    from centeba_smart_llm.usage import assert_within_budget
 
     company = str(uuid.uuid4())
     ctx = UsageContext(

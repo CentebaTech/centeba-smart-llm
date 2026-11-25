@@ -2,7 +2,7 @@
 
 import pytest
 
-from smart_llm.security.prompt_injection import (
+from centeba_smart_llm.security.prompt_injection import (
     PromptInjectionError,
     PromptInjectionFilterTool,
     _normalize,

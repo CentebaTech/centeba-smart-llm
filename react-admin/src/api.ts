@@ -1,4 +1,4 @@
-// Typed client for the smart-llm admin API. Mirrors the endpoints the Flutter
+// Typed client for the centeba-smart-llm admin API. Mirrors the endpoints the Flutter
 // UI uses (see flutter_package/lib/src/services/ai_agents_service.dart):
 //   /api/v1/ai-agents/          /api/v1/ai-skills/
 //   /api/v1/ai-agents/llm-keys/ /api/v1/ai-usage/cost-dashboard

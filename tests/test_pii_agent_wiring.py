@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from smart_llm import Agent
-from smart_llm.pii.masking_provider import MaskingProvider
+from centeba_smart_llm import Agent
+from centeba_smart_llm.pii.masking_provider import MaskingProvider
 
 
 def _agent(pii_policy):
@@ -61,7 +61,7 @@ async def test_analyze_masks_egress_and_rehydrates(monkeypatch):
 def test_llm_service_default_policy_is_enforce():
     # The host helper flips masking on out-of-the-box when the company hasn't
     # set a policy (company_pii_policy=None → env default 'enforce').
-    from smart_llm.api.llm_service import _resolve_pii
+    from centeba_smart_llm.api.llm_service import _resolve_pii
 
     policy, allow_vision = _resolve_pii(None, None)
     assert policy == "enforce"
@@ -69,7 +69,7 @@ def test_llm_service_default_policy_is_enforce():
 
 
 def test_llm_service_agent_override_tightens():
-    from smart_llm.api.llm_service import _resolve_pii
+    from centeba_smart_llm.api.llm_service import _resolve_pii
 
     cfg = json.dumps({"pii_masking_policy": "strict", "allow_vision_pii": True})
     policy, allow_vision = _resolve_pii("off", cfg)

@@ -2,9 +2,9 @@
 
 import pytest
 
-from smart_llm.base import LLMResponse
-from smart_llm.conversation import Conversation
-from smart_llm.session import (
+from centeba_smart_llm.base import LLMResponse
+from centeba_smart_llm.conversation import Conversation
+from centeba_smart_llm.session import (
     NullConversationManager,
     SlidingWindowManager,
     SummarizingManager,

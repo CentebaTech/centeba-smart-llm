@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from smart_llm.security.moderation import (
+from centeba_smart_llm.security.moderation import (
     ChainModerator,
     LLMClassifierModerator,
     ModerationResult,

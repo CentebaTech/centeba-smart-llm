@@ -26,11 +26,11 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from smart_llm.api.scoping import (
+from centeba_smart_llm.api.scoping import (
     resolve_paying_company_id,
     visible_agent_filter,
 )
-from smart_llm.db.models import (
+from centeba_smart_llm.db.models import (
     SCOPE_COMPANY,
     SCOPE_PLATFORM,
     SCOPE_SHARED,

@@ -1,7 +1,7 @@
 import pytest
 
-from smart_llm.base import LLMResponse
-from smart_llm.key_manager import KeyManager
+from centeba_smart_llm.base import LLMResponse
+from centeba_smart_llm.key_manager import KeyManager
 
 
 @pytest.fixture(autouse=True)

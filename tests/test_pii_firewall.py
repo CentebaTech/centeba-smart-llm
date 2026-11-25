@@ -2,7 +2,7 @@
 
 import json
 
-from smart_llm.pii.firewall import PiiFirewall, TokenVault
+from centeba_smart_llm.pii.firewall import PiiFirewall, TokenVault
 
 SSN = "123-45-6789"
 EMAIL = "jane@example.com"

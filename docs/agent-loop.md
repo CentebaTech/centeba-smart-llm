@@ -1,6 +1,6 @@
 # Agent loop — Phase F2 architecture
 
-The smart-llm package supports three tool flavours and two execution
+The centeba-smart-llm package supports three tool flavours and two execution
 paths. This note maps the flavours to the paths so the next person
 reading the package understands which knob controls what.
 
@@ -81,7 +81,7 @@ The loop stays format-agnostic because each provider implements
 ## End-to-end example
 
 ```python
-from smart_llm import Agent
+from centeba_smart_llm import Agent
 
 agent = Agent(
     name="Database Inspector",
@@ -91,7 +91,7 @@ agent = Agent(
 )
 
 # postgres_run_query is an ActionTool registered in
-# smart_llm.builtins.integration_hub.
+# centeba_smart_llm.builtins.integration_hub.
 response = await agent.run_with_skills(
     "How many active rules are there in the system?",
     skill_names=["postgres_list_tables", "postgres_run_query"],
@@ -125,12 +125,12 @@ agent"* and get autonomous multi-step tool use for free.
 
 ## See also
 
-- `packages/smart-llm/src/smart_llm/agent_loop.py` — the loop itself
-- `packages/smart-llm/src/smart_llm/base.py` — `Tool`, `OutputTool`,
+- `src/centeba_smart_llm/agent_loop.py` — the loop itself
+- `src/centeba_smart_llm/base.py` — `Tool`, `OutputTool`,
   `ActionTool` ABCs
-- `packages/smart-llm/src/smart_llm/builtins/integration_hub/` — the
+- `src/centeba_smart_llm/builtins/integration_hub/` — the
   16 ActionTool subclasses shipped today (Postgres, Gmail, Outlook,
   Drive, Stripe, Datadog, Elasticsearch)
-- `packages/smart-llm/tests/test_agent_loop.py` — 16 tests covering
+- `tests/test_agent_loop.py` — 16 tests covering
   the loop's dispatch, termination, max_iterations, and the multi-
   turn message-building helpers

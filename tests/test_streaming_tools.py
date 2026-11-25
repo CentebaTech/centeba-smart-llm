@@ -14,10 +14,10 @@ from unittest.mock import MagicMock
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.agent_loop import (
+from centeba_smart_llm.agent_loop import (
     run_agent_loop_stream,
 )
-from smart_llm.base import ActionTool
+from centeba_smart_llm.base import ActionTool
 
 # ── Test fixtures — minimal ActionTool + helpers ────────────────────────────
 
@@ -247,7 +247,7 @@ async def test_stream_loop_policy_gate_blocks_unattended_write_tool():
         ]
     )
 
-    from smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
+    from centeba_smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
 
     gate = ToolPolicyGate(
         AgentRunContext(agent_id="a", acting_company_id="c", tool_modes={})

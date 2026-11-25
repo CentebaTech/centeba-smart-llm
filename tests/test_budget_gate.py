@@ -1,4 +1,4 @@
-"""Unit tests for :func:`smart_llm.usage.assert_llm_allowed_for_tenant`.
+"""Unit tests for :func:`centeba_smart_llm.usage.assert_llm_allowed_for_tenant`.
 
 The Phase F tenant gate must:
   1. No-op when cap is 0 (unlimited).
@@ -22,7 +22,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from smart_llm.usage import (
+from centeba_smart_llm.usage import (
     BudgetExceededError,
     assert_llm_allowed_for_tenant,
 )
@@ -104,7 +104,7 @@ def fake_spend(monkeypatch):
     async def _stub(_session, _model, _company_id):
         return spend_holder["value"]
 
-    monkeypatch.setattr("smart_llm.usage.get_month_to_date_spend", _stub)
+    monkeypatch.setattr("centeba_smart_llm.usage.get_month_to_date_spend", _stub)
     return spend_holder
 
 

@@ -9,8 +9,11 @@ from mcp.shared.memory import (  # noqa: E402
     create_connected_server_and_client_session,
 )
 
-from smart_llm.mcp import MCPToolProvider  # noqa: E402
-from smart_llm.mcp.client import _jsonschema_to_model, _sanitize_name  # noqa: E402
+from centeba_smart_llm.mcp import MCPToolProvider  # noqa: E402
+from centeba_smart_llm.mcp.client import (  # noqa: E402
+    _jsonschema_to_model,
+    _sanitize_name,
+)
 
 
 def _server() -> FastMCP:

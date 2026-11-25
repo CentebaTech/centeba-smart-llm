@@ -2,7 +2,7 @@
   "name": "smart-llm-admin",
   "private": true,
   "version": "0.1.0",
-  "description": "React admin UI for smart-llm — agents, skills, LLM keys, and usage budgets.",
+  "description": "React admin UI for centeba-smart-llm — agents, skills, LLM keys, and usage budgets.",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,7 +1,7 @@
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.base import AbstractAgent, ActionTool, LLMResponse, Tool
+from centeba_smart_llm.base import AbstractAgent, ActionTool, LLMResponse, Tool
 
 
 class MockTool(Tool):

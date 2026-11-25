@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from smart_llm import token_revocation
-from smart_llm.token_revocation import (
+from centeba_smart_llm import token_revocation
+from centeba_smart_llm.token_revocation import (
     is_revoked,
     revoke_jti,
     revoke_user_tokens,

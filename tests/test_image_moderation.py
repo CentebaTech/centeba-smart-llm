@@ -2,8 +2,8 @@
 
 import pytest
 
-from smart_llm.security.guard import SafetyConfig, SafetyGuard
-from smart_llm.security.moderation import (
+from centeba_smart_llm.security.guard import SafetyConfig, SafetyGuard
+from centeba_smart_llm.security.moderation import (
     ModerationError,
     ModerationResult,
     ModerationUnavailableError,
@@ -102,7 +102,7 @@ async def test_agent_analyze_image_screens_image(monkeypatch):
     # Full path: Agent.analyze_image calls screen_image, which blocks a flagged image.
     from unittest.mock import AsyncMock, MagicMock, patch
 
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     mock_cls = MagicMock()
     inst = mock_cls.return_value
@@ -120,7 +120,7 @@ async def test_agent_analyze_image_screens_image(monkeypatch):
     guard._moderator = None  # no network text moderation in the test
     guard._image_moderator = _FakeImageModerator(flagged=True, categories=["violence"])
 
-    with patch("smart_llm.agent.AnthropicProvider", mock_cls):
+    with patch("centeba_smart_llm.agent.AnthropicProvider", mock_cls):
         agent = Agent(
             name="v",
             provider_type="anthropic",

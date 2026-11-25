@@ -5,9 +5,9 @@ from __future__ import annotations
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.agent_loop import ToolCall, _dispatch_all
-from smart_llm.base import ActionTool
-from smart_llm.security.tool_policy import (
+from centeba_smart_llm.agent_loop import ToolCall, _dispatch_all
+from centeba_smart_llm.base import ActionTool
+from centeba_smart_llm.security.tool_policy import (
     AgentRunContext,
     ToolPolicyGate,
     resolve_tool_policy,
@@ -193,7 +193,7 @@ class _FakeProvider:
 
 @pytest.mark.asyncio
 async def test_run_one_turn_final():
-    from smart_llm.agent_loop import AgentTurn, run_one_turn
+    from centeba_smart_llm.agent_loop import AgentTurn, run_one_turn
 
     prov = _FakeProvider(
         AgentTurn(content="done", tool_calls=[], stop_reason="end_turn")
@@ -204,8 +204,8 @@ async def test_run_one_turn_final():
 
 @pytest.mark.asyncio
 async def test_run_one_turn_tool_calls_with_decision():
-    from smart_llm.agent_loop import AgentTurn, run_one_turn
-    from smart_llm.agent_loop import ToolCall as TC
+    from centeba_smart_llm.agent_loop import AgentTurn, run_one_turn
+    from centeba_smart_llm.agent_loop import ToolCall as TC
 
     send = _SendTool()
     send._registry_name = "send_tool"  # type: ignore[attr-defined]

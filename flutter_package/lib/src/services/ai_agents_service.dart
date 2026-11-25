@@ -26,7 +26,7 @@ final aiAgentsServiceProvider = Provider<AIAgentsService>((ref) {
   return AIAgentsService(ref.watch(smartLlmDioProvider));
 });
 
-/// Client for the smart-llm backend router (agents, skills, LLM keys).
+/// Client for the centeba-smart-llm backend router (agents, skills, LLM keys).
 ///
 /// Chat / thread endpoints intentionally live in the host application because
 /// they carry per-app context (threads, evaluations, etc.).

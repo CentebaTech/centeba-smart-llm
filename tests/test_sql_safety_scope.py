@@ -10,7 +10,7 @@ import uuid
 
 import pytest
 
-from smart_llm.sql_safety import SqlSafetyError, validate_scoped_sql
+from centeba_smart_llm.sql_safety import SqlSafetyError, validate_scoped_sql
 
 MINE = uuid.UUID("11111111-1111-1111-1111-111111111111")
 OTHER = "22222222-2222-2222-2222-222222222222"

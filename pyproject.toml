@@ -1,6 +1,6 @@
 [project]
-name = "smart-llm"
-version = "0.2.0"
+name = "centeba-smart-llm"
+version = "0.3.0"
 description = "A generic, agentic LLM interface with multi-provider support and key rotation."
 readme = "README.md"
 license = { text = "MIT" }
@@ -14,7 +14,7 @@ dependencies = [
     "uvicorn>=0.45.0",
     "python-dotenv>=1.0.0",
     "httpx>=0.28.1",
-    # SQL parsing for smart_llm.sql_safety (validates/scopes db_query SQL).
+    # SQL parsing for centeba_smart_llm.sql_safety (validates/scopes db_query SQL).
     "sqlparse>=0.5",
     # Structured logging used by logging_config / telemetry_context / service_runtime.
     "structlog>=24.0.0",
@@ -28,14 +28,14 @@ db = [
 ]
 # Observability stack (Phase 3 of the architecture assessment). Pin
 # loosely — every service that needs Prometheus/OTEL/Sentry installs
-# smart-llm[observability] in its requirements so all services land
-# on the same versions and the smart_llm.observability helper can
+# centeba-smart-llm[observability] in its requirements so all services land
+# on the same versions and the centeba_smart_llm.observability helper can
 # import them unconditionally.
 observability = [
     "prometheus-fastapi-instrumentator>=7.0.0",
     # sentry-sdk 3 dropped init(send_default_pii=...) and the fastapi extra; stay on 2.x.
     "sentry-sdk[fastapi]>=2.0.0,<3",
-    # opentelemetry-api is what smart_llm.tracing imports to emit agent-native
+    # opentelemetry-api is what centeba_smart_llm.tracing imports to emit agent-native
     # GenAI spans; the sdk pulls it transitively but list it explicitly so the
     # agent-tracing layer has a declared floor.
     "opentelemetry-api>=1.27.0",
@@ -112,4 +112,4 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 # Coverage gate (SB-04) — conservative floor; ratchet from the first green CI run.
-addopts = "--cov=smart_llm --cov-report=term-missing --cov-fail-under=50"
+addopts = "--cov=centeba_smart_llm --cov-report=term-missing --cov-fail-under=50"

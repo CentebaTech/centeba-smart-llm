@@ -9,9 +9,9 @@ import json
 
 import pytest
 
-from smart_llm.agent_loop import AgentTurn, ToolCall
-from smart_llm.pii.firewall import PiiFirewall, PiiMaskingError
-from smart_llm.pii.masking_provider import MaskingProvider
+from centeba_smart_llm.agent_loop import AgentTurn, ToolCall
+from centeba_smart_llm.pii.firewall import PiiFirewall, PiiMaskingError
+from centeba_smart_llm.pii.masking_provider import MaskingProvider
 
 SSN = "123-45-6789"
 EMAIL = "jane@example.com"

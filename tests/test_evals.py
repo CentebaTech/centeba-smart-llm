@@ -2,8 +2,8 @@
 
 import pytest
 
-from smart_llm.base import LLMResponse
-from smart_llm.evals import (
+from centeba_smart_llm.base import LLMResponse
+from centeba_smart_llm.evals import (
     AgentRun,
     Contains,
     Equals,
@@ -18,7 +18,7 @@ from smart_llm.evals import (
 
 
 class _FakeAgent:
-    """Minimal stand-in for smart_llm.Agent — returns fixed response data."""
+    """Minimal stand-in for centeba_smart_llm.Agent — returns fixed response data."""
 
     def __init__(self, data):
         self._data = data

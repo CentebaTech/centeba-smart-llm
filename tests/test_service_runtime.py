@@ -1,11 +1,11 @@
-"""Tests for smart_llm.service_runtime (replica-aware pool sizing)."""
+"""Tests for centeba_smart_llm.service_runtime (replica-aware pool sizing)."""
 
 import importlib
 from datetime import timedelta
 
 import pytest
 
-from smart_llm.service_runtime import (
+from centeba_smart_llm.service_runtime import (
     AUTH_ERROR_HEADER,
     AUTH_ERROR_TOKEN_EXPIRED,
     graceful_shutdown_timeout,
@@ -77,7 +77,7 @@ def test_auth_error_constants():
 
 
 def test_module_exports_helpers():
-    mod = importlib.import_module("smart_llm.service_runtime")
+    mod = importlib.import_module("centeba_smart_llm.service_runtime")
     for name in (
         "add_readiness_route",
         "install_exception_handler",
