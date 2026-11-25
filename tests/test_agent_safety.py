@@ -4,10 +4,10 @@ import asyncio
 
 import pytest
 
-from smart_llm.agent import Agent
-from smart_llm.agent_loop import ToolCall, _dispatch_all
-from smart_llm.security.guard import SafetyConfig, SafetyGuard
-from smart_llm.security.moderation import (
+from centeba_smart_llm.agent import Agent
+from centeba_smart_llm.agent_loop import ToolCall, _dispatch_all
+from centeba_smart_llm.security.guard import SafetyConfig, SafetyGuard
+from centeba_smart_llm.security.moderation import (
     ChainModerator,
     ModerationError,
     ModerationResult,

@@ -1,4 +1,4 @@
-# smart-llm
+# centeba-smart-llm
 
 A generic, agentic LLM interface for Python — multi-provider, with a safety-first
 agent loop, tool policy enforcement, key rotation, and first-class observability.
@@ -17,18 +17,18 @@ Standalone and dependency-clean (no host-platform coupling).
   (descriptions sanitized + fingerprint-pinned).
 - **Observability** — OTEL traces + Prometheus metrics + Sentry, structured JSON
   logging with trace correlation, and deep readiness helpers — all opt-in and
-  no-op-safe (`smart_llm.observability`, `smart_llm.logging_config`,
-  `smart_llm.service_runtime`).
+  no-op-safe (`centeba_smart_llm.observability`, `centeba_smart_llm.logging_config`,
+  `centeba_smart_llm.service_runtime`).
 - **Resilience** — per-host circuit breakers and retry helpers
-  (`smart_llm.resilience`).
+  (`centeba_smart_llm.resilience`).
 
 ## Install
 
 ```bash
-pip install smart-llm                      # core
-pip install "smart-llm[db]"                # + SQLAlchemy-backed key store / usage
-pip install "smart-llm[observability]"     # + Prometheus / OTEL / Sentry
-pip install "smart-llm[mcp]"               # + MCP client
+pip install centeba-smart-llm                      # core
+pip install "centeba-smart-llm[db]"                # + SQLAlchemy-backed key store / usage
+pip install "centeba-smart-llm[observability]"     # + Prometheus / OTEL / Sentry
+pip install "centeba-smart-llm[mcp]"               # + MCP client
 ```
 
 (Local dev: `pip install -e ".[db,observability,mcp,test]"`.)
@@ -37,7 +37,7 @@ pip install "smart-llm[mcp]"               # + MCP client
 
 ```python
 import asyncio
-from smart_llm import Agent, AgentManager, ContextPruningTool
+from centeba_smart_llm import Agent, AgentManager, ContextPruningTool
 
 
 async def main():
@@ -74,8 +74,8 @@ run the full example in [`examples/agent_demo.py`](examples/agent_demo.py).
 
 ```python
 from fastapi import FastAPI
-from smart_llm.observability import install_observability
-from smart_llm.logging_config import configure_logging
+from centeba_smart_llm.observability import install_observability
+from centeba_smart_llm.logging_config import configure_logging
 
 configure_logging(service_name="my-service")  # JSON logs + OTLP export + trace ids
 app = FastAPI()
@@ -98,7 +98,7 @@ Each has its own README.
 
 ## Layout
 
-- `src/smart_llm/` — the package (agent, providers, tools, security, mcp,
+- `src/centeba_smart_llm/` — the package (agent, providers, tools, security, mcp,
   observability, resilience, …).
 - `examples/` — runnable examples.
 - `docs/` — design and usage notes.
@@ -110,17 +110,17 @@ Each has its own README.
 - [**notification-hub**](https://github.com/centeba/notification-hub) — a
   multi-channel notification service (email / SMS / webhook) that builds its
   agentic AI layer, key store, usage/budgets, and observability rails on
-  smart-llm. Its
+  centeba-smart-llm. Its
   [integration connectors](https://github.com/centeba/notification-hub/blob/77dde1be6564cf9f58e829159e41f3b88d8beb51/src/integration_hub_backend/api/api/routes/integrations_catalog.py)
   (Gmail, Outlook, Stripe, S3, Datadog, Claude, and more, managed from the
   admin UIs' Integrations page) include a Claude connector that runs on
-  smart-llm.
+  centeba-smart-llm.
 - [**sentinelbuild-workflow-engine**](https://github.com/centeba/sentinelbuild_workflow_engine)
   — an n8n-equivalent durable workflow automation platform whose agent nodes,
-  key store, and observability rails run on smart-llm. Its
+  key store, and observability rails run on centeba-smart-llm. Its
   [connector integrations](https://github.com/centeba/sentinelbuild_workflow_engine/blob/cf8c1c49d76db1d18b34040a3e77461ce29791c8/backend/api/connectors.json)
   (Claude, OpenAI, and 20+ others, managed from the admin UIs' Integrations
-  page) route their LLM calls through smart-llm.
+  page) route their LLM calls through centeba-smart-llm.
 
 ## License
 

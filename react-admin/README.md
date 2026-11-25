@@ -1,6 +1,6 @@
-# smart-llm admin (React)
+# centeba-smart-llm admin (React)
 
-A small React + TypeScript admin UI for smart-llm — the web counterpart to the
+A small React + TypeScript admin UI for centeba-smart-llm — the web counterpart to the
 Flutter package in [`../flutter_package`](../flutter_package). Displays **agents**,
 **skills**, **LLM keys**, and **usage & budgets**, reading the same API:
 
@@ -15,7 +15,7 @@ Flutter package in [`../flutter_package`](../flutter_package). Displays **agents
 
 ```bash
 npm install
-VITE_API_TARGET=http://localhost:8000 npm run dev   # dev server proxies /api -> your smart-llm service
+VITE_API_TARGET=http://localhost:8000 npm run dev   # dev server proxies /api -> your centeba-smart-llm service
 ```
 
 Open http://localhost:5173. A bearer token in `localStorage.smart_llm_token` is
@@ -31,4 +31,4 @@ npm run typecheck
 ## Deploy
 
 `npm run build` emits a static `dist/`. Serve it behind the same origin as the
-smart-llm API (or set `VITE_API_BASE` at build time to an absolute API base).
+centeba-smart-llm API (or set `VITE_API_BASE` at build time to an absolute API base).

@@ -27,9 +27,9 @@ import pytest
 def _build_anthropic_provider(**kwargs):
     """Construct AnthropicProvider with the AsyncAnthropic client mocked
     so no network call escapes the tests."""
-    from smart_llm.providers.anthropic import AnthropicProvider
+    from centeba_smart_llm.providers.anthropic import AnthropicProvider
 
-    with patch("smart_llm.providers.anthropic.AsyncAnthropic"):
+    with patch("centeba_smart_llm.providers.anthropic.AsyncAnthropic"):
         return AnthropicProvider(api_key="test", **kwargs)
 
 
@@ -69,7 +69,7 @@ def test_anthropic_max_tokens_invalid_env_falls_back_with_warning(
 async def test_agent_analyze_messages_passes_through_to_provider():
     """Pure multi-turn — ``messages`` only, no ``input_text``. The
     provider receives the message list verbatim."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     history = [
         {"role": "user", "content": "First turn from user."},
@@ -77,7 +77,7 @@ async def test_agent_analyze_messages_passes_through_to_provider():
         {"role": "user", "content": "Follow-up question."},
     ]
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.complete = AsyncMock(return_value={"content": "A reply."})
         instance.last_usage = {"input_tokens": 10, "output_tokens": 5}
@@ -103,14 +103,14 @@ async def test_agent_analyze_messages_passes_through_to_provider():
 async def test_agent_analyze_messages_plus_input_appends_new_turn():
     """``messages`` + ``input_text`` — the new user turn is appended
     after the existing history."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     history = [
         {"role": "user", "content": "Hi."},
         {"role": "assistant", "content": "Hello!"},
     ]
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.complete = AsyncMock(return_value={"content": "OK."})
         instance.last_usage = {"input_tokens": 0, "output_tokens": 0}
@@ -134,9 +134,9 @@ async def test_agent_analyze_string_only_unchanged_legacy_path():
     """Backwards-compat — single-string callers must still get the
     pre-SLM2 ``Context: …\\n\\nInput: …`` wrap when context is set,
     or the bare string when it isn't."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.complete = AsyncMock(return_value={"content": "OK."})
         instance.last_usage = {"input_tokens": 0, "output_tokens": 0}
@@ -157,10 +157,10 @@ async def test_agent_analyze_string_only_unchanged_legacy_path():
 async def test_conversation_accumulates_turns():
     """``Conversation.send`` appends user + assistant turns and feeds
     the growing history to subsequent calls."""
-    from smart_llm.agent import Agent
-    from smart_llm.conversation import Conversation
+    from centeba_smart_llm.agent import Agent
+    from centeba_smart_llm.conversation import Conversation
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.last_usage = {"input_tokens": 0, "output_tokens": 0}
         # Two distinct replies — one per send().
@@ -206,8 +206,8 @@ async def test_conversation_accumulates_turns():
 def test_conversation_extract_text_falls_back_to_json():
     """When the provider returns shape unrelated to ``content``, the
     fallback dumps JSON so the caller still sees something useful."""
-    from smart_llm.base import LLMResponse
-    from smart_llm.conversation import Conversation
+    from centeba_smart_llm.base import LLMResponse
+    from centeba_smart_llm.conversation import Conversation
 
     response = LLMResponse(
         data={"unexpected_key": "value"},
@@ -220,7 +220,7 @@ def test_conversation_extract_text_falls_back_to_json():
 
 
 def test_conversation_reset_clears_history():
-    from smart_llm.conversation import Conversation
+    from centeba_smart_llm.conversation import Conversation
 
     # Seed with a fake agent — reset() doesn't touch it.
     conv = Conversation.__new__(Conversation)

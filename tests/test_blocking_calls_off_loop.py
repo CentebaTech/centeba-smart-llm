@@ -8,8 +8,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from smart_llm.builtins.parsing import fallback_chain
-from smart_llm.providers.gemini import GeminiProvider
+from centeba_smart_llm.builtins.parsing import fallback_chain
+from centeba_smart_llm.providers.gemini import GeminiProvider
 
 
 @pytest.mark.asyncio

@@ -5,8 +5,8 @@ from unittest.mock import patch
 import pytest
 import pytest_asyncio
 
-from smart_llm.key_manager import KeyManager
-from smart_llm.key_store import EnvKeyStore
+from centeba_smart_llm.key_manager import KeyManager
+from centeba_smart_llm.key_store import EnvKeyStore
 
 # ---------------------------------------------------------------------------
 # EnvKeyStore tests
@@ -126,7 +126,7 @@ async def test_key_manager_no_store_raises():
 
 
 # ---------------------------------------------------------------------------
-# DatabaseKeyStore tests (requires smart-llm[db])
+# DatabaseKeyStore tests (requires centeba-smart-llm[db])
 # ---------------------------------------------------------------------------
 
 try:
@@ -149,7 +149,7 @@ def encryption_key():
 async def db_store(encryption_key):
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.key_store import DatabaseKeyStore
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     store = DatabaseKeyStore(engine=engine, encryption_key=encryption_key)
@@ -262,8 +262,8 @@ async def kms_store(encryption_key):
     envelope-encrypted, legacy Fernet rows still decrypt."""
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
-    from smart_llm.secret_envelope import LocalKMSProvider
+    from centeba_smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.secret_envelope import LocalKMSProvider
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     store = DatabaseKeyStore(
@@ -300,7 +300,7 @@ async def _raw_encrypted_key(store, provider: str) -> str:
 @pytest.mark.skipif(not HAS_DB_DEPS, reason="db extras not installed")
 @pytest.mark.asyncio
 async def test_kms_store_stores_envelope_not_plaintext_or_fernet(kms_store):
-    from smart_llm.secret_envelope import is_envelope
+    from centeba_smart_llm.secret_envelope import is_envelope
 
     await kms_store.save_key("openai", "sk-envelope-1")
     stored = await _raw_encrypted_key(kms_store, "openai")
@@ -318,8 +318,8 @@ async def test_kms_store_reads_legacy_fernet_rows(encryption_key):
     plain-Fernet scheme (so enabling KMS doesn't strand existing keys)."""
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
-    from smart_llm.secret_envelope import LocalKMSProvider
+    from centeba_smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.secret_envelope import LocalKMSProvider
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     # 1) Write with a legacy (no-KMS) store.
@@ -341,8 +341,8 @@ async def test_kms_store_reads_legacy_fernet_rows(encryption_key):
 async def test_reencrypt_all_migrates_legacy_rows(encryption_key):
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
-    from smart_llm.secret_envelope import LocalKMSProvider, is_envelope
+    from centeba_smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.secret_envelope import LocalKMSProvider, is_envelope
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     legacy = DatabaseKeyStore(engine=engine, encryption_key=encryption_key)
@@ -379,7 +379,7 @@ async def test_reencrypt_all_requires_kms_provider(db_store):
 async def test_legacy_store_cannot_decrypt_envelope_rows(kms_store, encryption_key):
     """Negative: a store with NO KMS provider must refuse an envelope row rather
     than silently returning garbage."""
-    from smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.key_store import DatabaseKeyStore
 
     await kms_store.save_key("openai", "sk-env-only")
     # A legacy store sharing the same engine but no KMS provider.
@@ -400,8 +400,8 @@ async def test_rewrap_all_rotates_kek(encryption_key):
     from cryptography.fernet import Fernet, InvalidToken
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
-    from smart_llm.secret_envelope import LocalKMSProvider
+    from centeba_smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.secret_envelope import LocalKMSProvider
 
     old_provider = LocalKMSProvider(encryption_key)
     new_key = Fernet.generate_key().decode()
@@ -441,8 +441,8 @@ async def test_rewrap_all_skips_legacy_rows(encryption_key):
     from cryptography.fernet import Fernet
     from sqlalchemy.ext.asyncio import create_async_engine
 
-    from smart_llm.key_store import DatabaseKeyStore
-    from smart_llm.secret_envelope import LocalKMSProvider, is_envelope
+    from centeba_smart_llm.key_store import DatabaseKeyStore
+    from centeba_smart_llm.secret_envelope import LocalKMSProvider, is_envelope
 
     engine = create_async_engine("sqlite+aiosqlite:///:memory:")
     legacy = DatabaseKeyStore(engine=engine, encryption_key=encryption_key)

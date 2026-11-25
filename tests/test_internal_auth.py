@@ -1,4 +1,4 @@
-"""The platform's one service-to-service check (smart_llm.internal_auth)."""
+"""The platform's one service-to-service check (centeba_smart_llm.internal_auth)."""
 
 from collections.abc import Iterator
 
@@ -6,7 +6,7 @@ import pytest
 from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 
-from smart_llm.internal_auth import (
+from centeba_smart_llm.internal_auth import (
     INTERNAL_KEY_HEADER,
     internal_headers,
     is_internal_caller,

@@ -10,7 +10,7 @@ from __future__ import annotations
 import pytest
 from cryptography.fernet import Fernet
 
-from smart_llm.secret_envelope import (
+from centeba_smart_llm.secret_envelope import (
     ENVELOPE_PREFIX,
     ENVELOPE_PREFIX_V2,
     LocalKMSProvider,
@@ -103,7 +103,7 @@ def test_rewrap_rotates_kek_and_preserves_data_ciphertext():
     new key-id."""
     from cryptography.fernet import InvalidToken
 
-    from smart_llm.secret_envelope import _parse, rewrap_secret
+    from centeba_smart_llm.secret_envelope import _parse, rewrap_secret
 
     old = LocalKMSProvider(Fernet.generate_key())
     new = LocalKMSProvider(Fernet.generate_key())
@@ -121,7 +121,7 @@ def test_rewrap_rotates_kek_and_preserves_data_ciphertext():
 
 
 def test_rewrap_rejects_non_envelope():
-    from smart_llm.secret_envelope import rewrap_secret
+    from centeba_smart_llm.secret_envelope import rewrap_secret
 
     p = LocalKMSProvider(Fernet.generate_key())
     with pytest.raises(ValueError):
@@ -131,7 +131,7 @@ def test_rewrap_rejects_non_envelope():
 def test_rewrap_fails_when_old_provider_is_wrong():
     from cryptography.fernet import InvalidToken
 
-    from smart_llm.secret_envelope import rewrap_secret
+    from centeba_smart_llm.secret_envelope import rewrap_secret
 
     blob = encrypt_secret(SECRET, LocalKMSProvider(Fernet.generate_key()))
     with pytest.raises(InvalidToken):
@@ -171,7 +171,7 @@ def test_v2_records_provider_key_id(provider):
 
 
 def test_rewrap_upgrades_v1_to_v2_and_tags_new_key_id():
-    from smart_llm.secret_envelope import rewrap_secret
+    from centeba_smart_llm.secret_envelope import rewrap_secret
 
     old = LocalKMSProvider(Fernet.generate_key())
     new = LocalKMSProvider(Fernet.generate_key())

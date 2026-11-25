@@ -1,6 +1,6 @@
-"""initial smart-llm schema (agents, skills, grants, runs, llm keys, usage ledger)
+"""initial centeba-smart-llm schema (agents, skills, grants, runs, llm keys, usage ledger)
 
-Creates every table from the unified metadata in ``smart_llm.db.schema``. This is
+Creates every table from the unified metadata in ``centeba_smart_llm.db.schema``. This is
 a "create everything" baseline; subsequent revisions can use normal autogenerate.
 
 Revision ID: 0001_initial
@@ -9,7 +9,7 @@ Create Date: 2026-09-14
 """
 
 from alembic import op
-from smart_llm.db.schema import metadata
+from centeba_smart_llm.db.schema import metadata
 
 revision = "0001_initial"
 down_revision = None

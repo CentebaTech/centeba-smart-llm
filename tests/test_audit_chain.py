@@ -3,8 +3,8 @@
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.security.audit_chain import GENESIS, AuditChain, verify_chain
-from smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
+from centeba_smart_llm.security.audit_chain import GENESIS, AuditChain, verify_chain
+from centeba_smart_llm.security.tool_policy import AgentRunContext, ToolPolicyGate
 
 
 def test_stamp_links_records():

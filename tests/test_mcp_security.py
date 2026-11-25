@@ -9,8 +9,11 @@ from mcp.shared.memory import (  # noqa: E402
     create_connected_server_and_client_session,
 )
 
-from smart_llm.mcp import MCPToolChangedError, MCPToolProvider  # noqa: E402
-from smart_llm.mcp.client import _sanitize_description, _tool_fingerprint  # noqa: E402
+from centeba_smart_llm.mcp import MCPToolChangedError, MCPToolProvider  # noqa: E402
+from centeba_smart_llm.mcp.client import (  # noqa: E402
+    _sanitize_description,
+    _tool_fingerprint,
+)
 
 # Assemble the injection phrase from parts so this test file contains no literal
 # injection string (which security hooks flag); the runtime value is the real

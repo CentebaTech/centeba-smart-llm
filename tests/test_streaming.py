@@ -37,9 +37,9 @@ async def _async_yield(*items):
 async def test_analyze_stream_yields_deltas_verbatim():
     """The Agent layer must not buffer or transform the provider's
     delta stream — chunks come through one-by-one."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.stream = MagicMock(return_value=_async_yield("Hel", "lo, ", "world!"))
 
@@ -62,7 +62,7 @@ async def test_analyze_stream_applies_context_wrap_on_single_turn():
     """Single-turn callers get the same ``Context: ...\\n\\nInput: ...``
     shape as ``analyze``. Streaming doesn't change the prompt
     contract."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     captured: dict = {}
 
@@ -71,7 +71,7 @@ async def test_analyze_stream_applies_context_wrap_on_single_turn():
         captured["user"] = user_prompt
         return _async_yield("ok")
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.stream = MagicMock(side_effect=_capture_stream)
 
@@ -93,7 +93,7 @@ async def test_analyze_stream_applies_context_wrap_on_single_turn():
 async def test_analyze_stream_messages_kwarg_passes_through():
     """SLM2 multi-turn stream — list of messages goes straight to the
     provider; no flattening into a single user_prompt string."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     captured: dict = {}
 
@@ -101,7 +101,7 @@ async def test_analyze_stream_messages_kwarg_passes_through():
         captured["user_prompt"] = user_prompt
         return _async_yield("hi")
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.stream = MagicMock(side_effect=_capture_stream)
 
@@ -128,7 +128,7 @@ async def test_analyze_stream_messages_kwarg_passes_through():
 async def test_analyze_stream_appends_input_after_messages():
     """messages + input_text — new user turn appended after the history,
     same rule as ``analyze``."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
     captured: dict = {}
 
@@ -136,7 +136,7 @@ async def test_analyze_stream_appends_input_after_messages():
         captured["user_prompt"] = user_prompt
         return _async_yield("ok")
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         instance.stream = MagicMock(side_effect=_capture_stream)
 
@@ -163,9 +163,9 @@ async def test_analyze_stream_appends_input_after_messages():
 async def test_analyze_stream_raises_when_provider_has_no_stream():
     """If the host wires a custom provider without ``stream()``, the
     Agent surface fails fast — not silently degrade to ``analyze``."""
-    from smart_llm.agent import Agent
+    from centeba_smart_llm.agent import Agent
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         instance = MockProv.return_value
         # Strip the ``stream`` attribute so hasattr returns False.
         # MagicMock auto-creates attrs on access; spec is the trick.
@@ -206,13 +206,13 @@ async def test_anthropic_stream_uses_self_max_tokens(monkeypatch):
         captured.update(kwargs)
         return _StreamCtx()
 
-    with patch("smart_llm.providers.anthropic.AsyncAnthropic") as MockSDK:
+    with patch("centeba_smart_llm.providers.anthropic.AsyncAnthropic") as MockSDK:
         mock_client = MockSDK.return_value
         mock_client.messages.stream = _capture_messages_stream
 
         # Construct after monkeypatch so ``_resolve_max_tokens``
         # picks up the env var.
-        from smart_llm.providers.anthropic import AnthropicProvider
+        from centeba_smart_llm.providers.anthropic import AnthropicProvider
 
         provider = AnthropicProvider(api_key="key")
         assert provider.max_tokens == 8000  # SLM1 sanity

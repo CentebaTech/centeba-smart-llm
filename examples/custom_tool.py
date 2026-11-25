@@ -1,12 +1,12 @@
-"""Example: add your own tool / integration to smart-llm.
+"""Example: add your own tool / integration to centeba-smart-llm.
 
-smart-llm ships generic built-in tools (calculate, web_search, scraper, …) but
+centeba-smart-llm ships generic built-in tools (calculate, web_search, scraper, …) but
 deliberately does NOT ship vendor-specific integration adapters (Stripe, Gmail,
 …) — those belong to your own backend. There are two supported extension paths:
 
   1. Subclass ``ActionTool`` (shown below) — for a tool you implement in Python.
   2. Point the MCP client at a tool server — for tools exposed over the Model
-     Context Protocol (see ``smart_llm.mcp.client`` and the note at the bottom).
+     Context Protocol (see ``centeba_smart_llm.mcp.client`` and the note at the bottom).
 
 Run:  python examples/custom_tool.py
 """
@@ -17,9 +17,9 @@ from typing import Any, cast
 import httpx
 from pydantic import BaseModel, Field
 
-from smart_llm.base import ActionTool
-from smart_llm.db.models import MODALITY_TEXT
-from smart_llm.registry import register_tool
+from centeba_smart_llm.base import ActionTool
+from centeba_smart_llm.db.models import MODALITY_TEXT
+from centeba_smart_llm.registry import register_tool
 
 # ── 1. A custom ActionTool ───────────────────────────────────────────────────
 
@@ -72,12 +72,12 @@ async def main() -> None:
 
 # ── 2. MCP alternative ───────────────────────────────────────────────────────
 # To expose tools from an external MCP server instead of writing them in Python,
-# install the extra (``pip install "smart-llm[mcp]"``) and connect the client;
+# install the extra (``pip install "centeba-smart-llm[mcp]"``) and connect the client;
 # each remote tool is adapted into a native ActionTool, its description sanitized,
 # and its definition fingerprint-pinned so a server that swaps tools after
 # approval is flagged:
 #
-#     from smart_llm.mcp.client import MCPToolProvider
+#     from centeba_smart_llm.mcp.client import MCPToolProvider
 #     provider = MCPToolProvider(http_url="https://tools.example.com/mcp")
 #     tools = await provider.connect()   # -> list[ActionTool]
 

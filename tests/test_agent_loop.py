@@ -1,4 +1,4 @@
-"""Tests for smart_llm.agent_loop — the F2 multi-turn agent loop driver.
+"""Tests for centeba_smart_llm.agent_loop — the F2 multi-turn agent loop driver.
 
 All tests are unit-level: no live LLM calls.  The provider is mocked via
 an object that exposes ``call_with_tools`` as an async callable, plus
@@ -15,7 +15,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from pydantic import BaseModel
 
-from smart_llm.agent_loop import (
+from centeba_smart_llm.agent_loop import (
     AgentTurn,
     ToolCall,
     _build_assistant_turn,
@@ -23,7 +23,7 @@ from smart_llm.agent_loop import (
     _dispatch_all,
     run_agent_loop,
 )
-from smart_llm.base import ActionTool
+from centeba_smart_llm.base import ActionTool
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 

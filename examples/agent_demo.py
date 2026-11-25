@@ -1,14 +1,14 @@
 import asyncio
 import os
 
-from smart_llm import Agent, AgentManager, ContextPruningTool
+from centeba_smart_llm import Agent, AgentManager, ContextPruningTool
 
 
 async def main():
     """
-    Demo script showcasing how to use the 'smart-llm' package standalone.
+    Demo script showcasing how to use the 'centeba-smart-llm' package standalone.
     """
-    print("--- smart-llm Agent Demo ---")
+    print("--- centeba-smart-llm Agent Demo ---")
 
     # 1. Define an Agent with specific tools
     # Note: Replace with your actual API key for a live test.

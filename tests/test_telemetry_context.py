@@ -1,7 +1,7 @@
 """Tests for the SentinelBuild-side observability emit rails.
 
-Covers the structured logging config (`smart_llm.logging_config`) and the
-per-request context middleware (`smart_llm.telemetry_context`). These are the
+Covers the structured logging config (`centeba_smart_llm.logging_config`) and the
+per-request context middleware (`centeba_smart_llm.telemetry_context`). These are the
 consumer-side glue that ships logs/traces to the (separate, self-contained)
 observability platform over OTLP — so the tests assert JSON shape, contextvar
 binding, and header propagation, not any platform internals.
@@ -13,8 +13,8 @@ import structlog
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from smart_llm.logging_config import configure_logging
-from smart_llm.telemetry_context import (
+from centeba_smart_llm.logging_config import configure_logging
+from centeba_smart_llm.telemetry_context import (
     REQUEST_ID_HEADER,
     bind_company,
     install_telemetry_context,

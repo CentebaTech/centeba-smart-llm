@@ -1,4 +1,4 @@
-"""The shared current-user dependency (smart_llm.current_user).
+"""The shared current-user dependency (centeba_smart_llm.current_user).
 
 Pins the platform-wide contract every service swaps to: 401 (+ WWW-Authenticate)
 for every token failure, X-Auth-Error on expiry, company_id -> org -> cid, the
@@ -17,8 +17,8 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 
-from smart_llm import current_user as cu
-from smart_llm.current_user import (
+from centeba_smart_llm import current_user as cu
+from centeba_smart_llm.current_user import (
     CurrentUser,
     current_user_dependency,
     optional_current_user_dependency,

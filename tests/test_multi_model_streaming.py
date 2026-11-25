@@ -7,7 +7,7 @@ Covers the seam the multi-model chat feature adds/relies on:
 - A per-turn ModelOverride selects provider/model without mutating the config.
 - usage_ctx wires billing; the row records under the *effective* model.
 - Errors and the terminal frame keep the {type: text|error|done} SSE contract.
-- smart_llm.catalog derives from PRICING + the OpenRouter meta-entry.
+- centeba_smart_llm.catalog derives from PRICING + the OpenRouter meta-entry.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from smart_llm.api.llm_service import (
+from centeba_smart_llm.api.llm_service import (
     ModelOverride,
     UsageRecording,
     run_agent_streaming,
@@ -62,7 +62,7 @@ async def _run(cfg, **kwargs) -> list[dict]:
 
 @pytest.mark.asyncio
 async def test_streams_text_then_done_frame():
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         inst = MockProv.return_value
         inst.stream = MagicMock(return_value=_async_yield("Hel", "lo"))
         inst.last_usage = {"input_tokens": 3, "output_tokens": 2}
@@ -76,7 +76,7 @@ async def test_error_emits_error_then_done():
     def _boom(*a, **k):
         raise RuntimeError("provider exploded")
 
-    with patch("smart_llm.agent.AnthropicProvider") as MockProv:
+    with patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv:
         inst = MockProv.return_value
         inst.stream = MagicMock(side_effect=_boom)
         inst.last_usage = {"input_tokens": 0, "output_tokens": 0}
@@ -92,8 +92,8 @@ async def test_error_emits_error_then_done():
 async def test_model_override_selects_provider_without_mutating_config():
     cfg = _agent_config(provider="anthropic", model="claude-sonnet-4-6")
     with (
-        patch("smart_llm.agent.OpenAIProvider") as MockOpenAI,
-        patch("smart_llm.agent.AnthropicProvider") as MockAnthropic,
+        patch("centeba_smart_llm.agent.OpenAIProvider") as MockOpenAI,
+        patch("centeba_smart_llm.agent.AnthropicProvider") as MockAnthropic,
     ):
         MockOpenAI.return_value.stream = MagicMock(return_value=_async_yield("hi"))
         MockOpenAI.return_value.last_usage = {"input_tokens": 1, "output_tokens": 1}
@@ -120,8 +120,8 @@ async def test_usage_recorded_under_effective_model():
         captured["output_tokens"] = kw.get("output_tokens")
 
     with (
-        patch("smart_llm.agent.OpenAIProvider") as MockOpenAI,
-        patch("smart_llm.usage.record_usage", _fake_record),
+        patch("centeba_smart_llm.agent.OpenAIProvider") as MockOpenAI,
+        patch("centeba_smart_llm.usage.record_usage", _fake_record),
     ):
         inst = MockOpenAI.return_value
         inst.stream = MagicMock(return_value=_async_yield("a", "b"))
@@ -146,14 +146,14 @@ async def test_usage_recorded_under_effective_model():
 
 @pytest.mark.asyncio
 async def test_budget_exceeded_surfaces_as_error_frame():
-    from smart_llm.usage import BudgetExceededError
+    from centeba_smart_llm.usage import BudgetExceededError
 
     async def _over_budget(*a, **k):
         raise BudgetExceededError("cap reached")
 
     with (
-        patch("smart_llm.agent.AnthropicProvider") as MockProv,
-        patch("smart_llm.usage.assert_within_budget", _over_budget),
+        patch("centeba_smart_llm.agent.AnthropicProvider") as MockProv,
+        patch("centeba_smart_llm.usage.assert_within_budget", _over_budget),
     ):
         inst = MockProv.return_value
         inst.stream = MagicMock(return_value=_async_yield("should-not-run"))
@@ -174,8 +174,8 @@ async def test_budget_exceeded_surfaces_as_error_frame():
 
 
 def test_catalog_derives_from_pricing_and_adds_openrouter():
-    from smart_llm import catalog
-    from smart_llm.usage import PRICING
+    from centeba_smart_llm import catalog
+    from centeba_smart_llm.usage import PRICING
 
     models = catalog.hosted_models()
     slugs = {(m.provider, m.model) for m in models}
@@ -189,7 +189,7 @@ def test_catalog_derives_from_pricing_and_adds_openrouter():
 
 
 def test_catalog_selectability_and_capabilities():
-    from smart_llm import catalog
+    from centeba_smart_llm import catalog
 
     assert catalog.is_selectable("openai", "gpt-4o") is True
     assert catalog.is_selectable("openai", "not-a-real-model") is False
@@ -205,7 +205,7 @@ def test_catalog_selectability_and_capabilities():
 
 @pytest.mark.asyncio
 async def test_openai_stream_captures_usage_from_final_chunk():
-    from smart_llm.providers.openai import OpenAIProvider
+    from centeba_smart_llm.providers.openai import OpenAIProvider
 
     def _chunk(content=None, usage=None):
         choice = SimpleNamespace(delta=SimpleNamespace(content=content))
@@ -227,7 +227,7 @@ async def test_openai_stream_captures_usage_from_final_chunk():
 
         return _gen()
 
-    with patch("smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
+    with patch("centeba_smart_llm.providers.openai.AsyncOpenAI") as MockSDK:
         MockSDK.return_value.chat.completions.create = _fake_create
         prov = OpenAIProvider(api_key="k", model_name="gpt-4o")
         out = [c async for c in prov.stream("sys", "hi")]

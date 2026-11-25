@@ -1,4 +1,4 @@
-/// Flutter UI package for smart-llm — agent configs, skills, and LLM keys.
+/// Flutter UI package for centeba-smart-llm — agent configs, skills, and LLM keys.
 ///
 /// The host application provides an authenticated [Dio] via
 /// `smartLlmDioProvider.overrideWith(...)` so these screens share the same

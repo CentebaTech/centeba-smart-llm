@@ -2,7 +2,7 @@
 
 import pytest
 
-from smart_llm.security.egress import EgressBlockedError, validate_egress_url
+from centeba_smart_llm.security.egress import EgressBlockedError, validate_egress_url
 
 
 @pytest.mark.parametrize(
@@ -50,7 +50,7 @@ def test_allowlist_env_bypasses(monkeypatch):
 
 def test_public_host_allowed(monkeypatch):
     # Avoid real DNS: pretend the host resolves to a public IP.
-    import smart_llm.security.egress as mod
+    import centeba_smart_llm.security.egress as mod
 
     monkeypatch.setattr(
         mod.socket,
@@ -61,7 +61,7 @@ def test_public_host_allowed(monkeypatch):
 
 
 def test_public_hostname_resolving_to_private_blocked(monkeypatch):
-    import smart_llm.security.egress as mod
+    import centeba_smart_llm.security.egress as mod
 
     # A public-looking name that resolves to a private IP (DNS-rebinding style).
     monkeypatch.setattr(
@@ -75,7 +75,7 @@ def test_public_hostname_resolving_to_private_blocked(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_scraper_blocks_metadata_url_without_fetching():
-    from smart_llm.builtins.scraper import ScrapeUrlArgs, ScrapeUrlSkill
+    from centeba_smart_llm.builtins.scraper import ScrapeUrlArgs, ScrapeUrlSkill
 
     tool = ScrapeUrlSkill()
     args = ScrapeUrlArgs(url="http://169.254.169.254/latest/meta-data/iam/")

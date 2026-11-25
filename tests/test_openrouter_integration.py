@@ -4,13 +4,16 @@ import types
 
 import pytest
 
-from smart_llm.provider_policy import (
+from centeba_smart_llm.provider_policy import (
     TenantAIPolicy,
     resolve_agent_provider,
     resolve_provider,
     split_openrouter_slug,
 )
-from smart_llm.providers.openrouter import OPENROUTER_BASE_URL, OpenRouterProvider
+from centeba_smart_llm.providers.openrouter import (
+    OPENROUTER_BASE_URL,
+    OpenRouterProvider,
+)
 
 # ── Provider wiring ──────────────────────────────────────────────────────────
 
@@ -42,7 +45,7 @@ def test_capture_provider_cost_reads_usage_cost_dict_and_survives_missing():
 
 
 def test_direct_openai_provider_unchanged_by_the_hooks():
-    from smart_llm.providers.openai import OpenAIProvider
+    from centeba_smart_llm.providers.openai import OpenAIProvider
 
     op = OpenAIProvider(api_key="sk-test")
     assert op._extra_create_kwargs() == {}  # no gateway cost accounting
@@ -54,7 +57,7 @@ def test_direct_openai_provider_unchanged_by_the_hooks():
 
 @pytest.mark.asyncio
 async def test_record_usage_prefers_explicit_cost_over_pricing_table():
-    from smart_llm.usage import UsageContext, record_usage
+    from centeba_smart_llm.usage import UsageContext, record_usage
 
     inserted = {}
 
@@ -91,7 +94,7 @@ async def test_record_usage_prefers_explicit_cost_over_pricing_table():
 
 @pytest.mark.asyncio
 async def test_record_usage_falls_back_to_pricing_when_no_cost():
-    from smart_llm.usage import UsageContext, estimate_cost_usd, record_usage
+    from centeba_smart_llm.usage import UsageContext, estimate_cost_usd, record_usage
 
     class _Row:
         def __init__(self, **kw):

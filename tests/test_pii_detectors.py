@@ -1,6 +1,6 @@
 """Detector precision/recall for the PII masking firewall."""
 
-from smart_llm.pii.detectors import (
+from centeba_smart_llm.pii.detectors import (
     CompositeDetector,
     PiiMatch,
     RegexDetector,

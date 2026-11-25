@@ -18,7 +18,7 @@ export function App() {
   return (
     <div className="app">
       <aside className="sidebar">
-        <div className="brand">smart-llm</div>
+        <div className="brand">centeba-smart-llm</div>
         <nav className="nav">
           {(Object.keys(TABS) as TabKey[]).map((k) => (
             <button

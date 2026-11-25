@@ -1,6 +1,6 @@
-"""Alembic environment for the optional standalone smart-llm schema.
+"""Alembic environment for the optional standalone centeba-smart-llm schema.
 
-Targets the unified metadata in ``smart_llm.db.schema`` (all agent/skill/key
+Targets the unified metadata in ``centeba_smart_llm.db.schema`` (all agent/skill/key
 tables + the ai_usage_events ledger). DB URL comes from ``$DATABASE_URL`` (or
 ``sqlalchemy.url`` in alembic.ini).
 """
@@ -11,7 +11,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-from smart_llm.db.schema import metadata
+from centeba_smart_llm.db.schema import metadata
 
 config = context.config
 if config.config_file_name is not None:

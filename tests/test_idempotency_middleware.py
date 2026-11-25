@@ -5,7 +5,7 @@ import json
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from smart_llm.api.middleware import IdempotencyMiddleware
+from centeba_smart_llm.api.middleware import IdempotencyMiddleware
 
 
 class _FakeRedis:

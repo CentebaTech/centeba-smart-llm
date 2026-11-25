@@ -1,6 +1,6 @@
 """StreamRestorer — token-boundary-safe re-hydration of streamed deltas."""
 
-from smart_llm.pii.firewall import StreamRestorer, TokenVault
+from centeba_smart_llm.pii.firewall import StreamRestorer, TokenVault
 
 
 def _vault_with(value: str, pii_type: str) -> tuple[TokenVault, str]:

@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from smart_llm.pii.firewall import PiiFirewall, TokenVault
+from centeba_smart_llm.pii.firewall import PiiFirewall, TokenVault
 
 NAME = "Jane Q. Patient"
 EMAIL = "jane@example.com"
@@ -41,7 +41,7 @@ def test_no_hints_is_noop():
 
 @pytest.mark.asyncio
 async def test_masking_provider_masks_hint_on_egress():
-    from smart_llm.pii.masking_provider import MaskingProvider
+    from centeba_smart_llm.pii.masking_provider import MaskingProvider
 
     class Fake:
         NAME = "fake"
@@ -68,7 +68,7 @@ async def test_masking_provider_masks_hint_on_egress():
 
 
 def test_agent_threads_pii_hints():
-    from smart_llm import Agent
+    from centeba_smart_llm import Agent
 
     agent = Agent(
         name="t",

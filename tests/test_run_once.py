@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import asyncio
 
-from smart_llm.service_runtime import run_once
+from centeba_smart_llm.service_runtime import run_once
 
 
 class _FakeRedis:
